@@ -31,6 +31,12 @@ Group by location, population
 ORDER BY PercentagePopualtionInfected desc
 --ORDER BY Location desc
 
+SELECT Location,population,date, max(total_cases) as HighestInfectionCount, MAX((total_cases/population))*100 as PercentagePopualtionInfected 
+FROM Portfolio_Project..CovidDeaths
+--where location = 'India'
+Group by location, population, date
+ORDER BY PercentagePopualtionInfected desc
+
 --Showing Countries with highest Death Count per Population
 SELECT Location, Max(cast(total_deaths as int)) as TotalDeathCount
 FROM Portfolio_Project..CovidDeaths
@@ -59,6 +65,14 @@ From Portfolio_Project..CovidDeaths
 where continent is not null 
 --Group By date
 order by 1,2
+
+
+Select location, sum(cast(new_deaths as int)) as totalDeathCount
+from Portfolio_Project..CovidDeaths
+where continent is null
+and location not in ('World','European Union','International')
+Group By location
+Order By totalDeathCount desc
 
 -- Total Population vs Vaccinations
 -- Shows Percentage of Population that has recieved at least one Covid Vaccine
